@@ -6,14 +6,16 @@
 
 | Lớp | Model + cỡ | Ngưỡng | Vì sao (dẫn `run_id` trong `model_log.csv`) |
 |---|---|---|---|
-| person / bicycle / motorbike / car / bus / truck | <<YOLO26m>> | <<theo lớp, từ threshold_sweep>> | <<>> |
-| three_wheeler | <<YOLOE-26s, prompt: ...>> | <<>> | <<>> |
+| person / motorbike / car | YOLO26m (`r01`) | mặc định `0.3` | Không ngưỡng nào `<= 0.5` đạt recall 90% trên 4 ảnh gold: person tối đa 85% (27 vật), motorbike tối đa 78% (23 vật), car tối đa 89% (9 vật). Giữ mặc định, không ép tăng ngưỡng vì sẽ tăng bỏ sót. |
+| bicycle | YOLO26m (`r01`) | `0.2` | Đạt recall 100% và precision 71% trên 5 vật gold; đây là ngưỡng cao nhất còn đạt mục tiêu recall 90%. |
+| bus / truck | YOLO26m (`r01`) | mặc định `0.3` | Gold có 0 vật mỗi lớp, dưới ngưỡng 5 vật để chọn riêng; giữ mặc định theo quy định, không suy luận từ mẫu rỗng. |
+| three_wheeler | YOLOE-s (`r03`, prompt `three_wheeler`) | `0.15` | Đạt recall 100% và precision 78% trên 7 vật gold; đây là ngưỡng cao nhất còn đạt mục tiêu recall 90%. |
 
-- Lệnh `merge_prelabels.py` đã dùng (dán nguyên): <<>>
+- Lệnh `merge_prelabels.py` đã dùng (dán nguyên): `python scripts/merge_prelabels.py work/prelabel/yoloe_all/pre.coco.json work/prelabel/y26_all/pre.coco.json --thr "bicycle=0.2,three_wheeler=0.15" --conf 0.3 --iou 0.6 --split "batch,gold" --out work/prelabel/merged_review/pre.coco.json`
 - **Phiên bản SAM bạn chọn** (SAM 1 / 2.1 / 3) và lý do: <<chất lượng mask, tốc độ, RAM, quyền truy cập>>
 - Lỗi nào **không sửa được bằng đổi ngưỡng** (ví dụ tuk-tuk bị gọi `car`)? Sửa thế nào? <<>>
 - Box **điểm cao mà sai** hoặc **điểm thấp mà đúng** (ảnh nào): <<>>
-- Giới hạn: chọn ngưỡng trên chính gold (4 ảnh) nên số đo máy trên gold là lạc quan: <<>>
+- Giới hạn: chỉ có 4 ảnh gold. Ngưỡng được chọn và precision/recall của máy đều được tính trên cùng dữ liệu gold, nên các số đo này lạc quan; các lớp ít vật có kết luận rất thô và cần pilot độc lập để xác nhận.
 
 ## 2. AI error profile (từ `qc/review_stats.md`)
 
