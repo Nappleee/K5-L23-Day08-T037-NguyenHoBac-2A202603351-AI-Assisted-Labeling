@@ -1,1 +1,4 @@
 case_id,image,nguon,van_de,quyet_dinh,quy_tac_ghi_vao_guideline,phien_ban_guideline
+CAL-01,img_013|img_004,loi_may,"YOLO26 gọi tuk-tuk là car hoặc truck","gán three_wheeler khi thấy cấu trúc xe ba bánh có mui, dù model dự đoán lớp khác","mục 2: tuk-tuk/xích lô/ba gác có mui là three_wheeler; người lái là person riêng","v1.1"
+CAL-02,img_035,cau_hoi_mo,"Chưa rõ hàng hóa trên xe đạp có thuộc mask/box xe không","hàng gắn cố định vào xe được giữ trong bicycle; hàng nhô ra khỏi xe hơn khoảng 20% được tách khỏi xe","mục 1: hàng gắn cố định thuộc xe, hàng nhô ra đáng kể không thuộc mask/box xe","v1.1"
+CAL-03,img_013|img_009,bay_lot,"Bỏ sót lỗi loose vì tin box máy có vẻ hợp lý","quét phần nhìn thấy trước, rồi kiểm riêng bốn lỗi missing/wrong_class/extra/loose trước khi chấp nhận box","mục 2: bắt buộc kiểm độ ôm sát và ghi loose, không suy ra chất lượng từ conf","v1.1"
